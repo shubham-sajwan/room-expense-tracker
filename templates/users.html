@@ -1,0 +1,17 @@
+<h1>Users</h1>
+
+<form action="/add_user" method="post">
+<input type="text" name="name" placeholder="User name">
+<button>Add User</button>
+</form>
+
+<ul>
+{% for user in users %}
+<li>
+{{user}}
+<a href="/delete_user/{{user}}">Delete</a>
+</li>
+{% endfor %}
+</ul>
+
+<a href="/dashboard">Back</a>

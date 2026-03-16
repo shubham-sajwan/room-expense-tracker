@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+<title>Dashboard</title>
+<link rel="stylesheet" href="/static/style.css">
+</head>
+
+<body>
+
+<h1>Expense Dashboard</h1>
+
+<div>
+<a href="/users">Users</a> |
+<a href="/expenses">Expenses</a> |
+<a href="/logout">Logout</a>
+<a href="/split">Split Expenses</a>
+</div>
+
+<hr>
+
+<h2>Total Expense This Month</h2>
+
+<h3>₹ {{ monthly_total }}</h3>
+
+<h2>All Expenses</h2>
+
+<ul>
+{% for e in expenses %}
+<li>
+{{ e.description }} - ₹{{ e.amount }} - {{ e.date }}
+</li>
+{% endfor %}
+</ul>
+
+</body>
+</html>

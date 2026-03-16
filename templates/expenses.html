@@ -1,0 +1,29 @@
+<h1>Expenses</h1>
+
+<form action="/add_expense" method="post">
+
+<input type="text" name="description" placeholder="Description">
+
+<input type="number" name="amount" placeholder="Amount">
+
+<input type="date" name="date">
+
+<select name="paid_by">
+{% for user in users %}
+<option value="{{user}}">{{user}}</option>
+{% endfor %}
+</select>
+
+<button>Add Expense</button>
+
+</form>
+
+<ul>
+{% for e in expenses %}
+<li>
+{{e.description}} - ₹{{e.amount}} - {{e.date}}
+</li>
+{% endfor %}
+</ul>
+
+<a href="/dashboard">Back</a>

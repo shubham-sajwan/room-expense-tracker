@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+<title>Expense Split</title>
+</head>
+
+<body>
+
+<h1>Expense Settlement</h1>
+
+<h3>Total Expense: ₹ {{ total }}</h3>
+<h3>Each Person Should Pay: ₹ {{ per_person }}</h3>
+
+<h2>Balances</h2>
+
+<ul>
+{% for user, balance in balances.items() %}
+
+<li>
+{{ user }} :
+
+{% if balance > 0 %}
+gets back ₹ {{ balance }}
+
+{% elif balance < 0 %}
+owes ₹ {{ -balance }}
+
+{% else %}
+settled
+{% endif %}
+
+</li>
+
+{% endfor %}
+</ul>
+
+<a href="/dashboard">Back</a>
+
+</body>
+
+</html>

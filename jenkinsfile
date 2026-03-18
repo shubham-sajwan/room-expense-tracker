@@ -1,0 +1,53 @@
+pipeline {
+    agent any
+
+    environment {
+        VENV = "venv"  // virtual environment folder
+        APP_FILE = "app.py" // main Python app file
+        APP_NAME = "room-expense-tracker"
+    }
+
+    stages {
+        stage('Checkout') {
+            steps {
+                echo 'Cloning GitHub repository...'
+                git branch: 'main', url: 'https://github.com/shubham-sajwan/room-expense-tracker.git'
+            }
+        }
+
+        stage('Setup Python Environment') {
+            steps {
+                echo 'Creating/updating virtual environment...'
+                sh 'python3 -m venv $VENV || echo "venv exists, skipping creation"'
+                sh '. $VENV/bin/activate && pip install --upgrade pip'
+                echo 'Installing dependencies...'
+                sh '. $VENV/bin/activate && pip install -r requirements.txt'
+            }
+        }
+
+        stage('Stop Existing App') {
+            steps {
+                echo 'Stopping previous app if running...'
+                sh 'pkill -f $APP_FILE || echo "No running process found"'
+            }
+        }
+
+        stage('Deploy Application') {
+            steps {
+                echo 'Starting application in background...'
+                sh '. $VENV/bin/activate && nohup python3 $APP_FILE > app.log 2>&1 &'
+            }
+        }
+    }
+
+    post {
+        success {
+            echo '✅ Deployment successful! App is running.'
+        }
+        failure {
+            echo '❌ Deployment failed. Check Jenkins logs.'
+        }
+    }
+}
+
+

@@ -2,8 +2,8 @@ pipeline {
     agent any
 
     environment {
-        VENV = "venv"  // virtual environment folder
-        APP_FILE = "app.py" // main Python app file
+        VENV = "venv"          // virtual environment folder
+        APP_FILE = "app.py"    // main Python app file
         APP_NAME = "room-expense-tracker"
     }
 
@@ -35,19 +35,21 @@ pipeline {
         stage('Deploy Application') {
             steps {
                 echo 'Starting application in background...'
-                sh '. $VENV/bin/activate && nohup python3 $APP_FILE > app.log 2>&1 &'
+                sh '''
+                    . $VENV/bin/activate
+                    cd $WORKSPACE
+                    nohup python3 $APP_FILE > app.log 2>&1 &
+                '''
             }
         }
     }
 
     post {
         success {
-            echo '✅ Deployment successful! App is running.'
+            echo '✅ Deployment successful! App is running on port 5000.'
         }
         failure {
-            echo '❌ Deployment failed. Check Jenkins logs.'
+            echo '❌ Deployment failed. Check Jenkins logs and app.log.'
         }
     }
 }
-
-

@@ -11,7 +11,7 @@ pipeline {
         stage('Checkout') {
             steps {
                 echo 'Cloning GitHub repository...'
-                git branch: 'main', url: 'https://github.com/shubham-sajwan/room-expense-tracker.git'
+                git branch: 'main', url: 'https://github.com/shubham-sajwan/room-expense-tracker'
             }
         }
 
